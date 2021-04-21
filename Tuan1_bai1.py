@@ -1,12 +1,15 @@
-
 s =input()
 s= s.title()
-s.replace(".",'')
+s=s.lower()
+for i in s:
+    if (i<'a' or i>'z') and i!=' ':
+        s = s.replace(i, "")
+s= s.replace("  ",' ')
 s.strip()
 lst = s.split(" ")
 Name =""
-for i in lst:
-    if i!= lst[-1]:
-        Name=Name+i[0]
+for x in lst:
+    if x != lst[-1]:
+        Name = Name + x[0]
 Name= Name +'.'+lst[-1]
 print(Name)
