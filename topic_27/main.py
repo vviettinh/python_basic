@@ -1,7 +1,6 @@
 from utils.func_main import add_info_reader, delete_info_reader, display_readers, \
     update_info_reader, find_info_reader, display_menu
 
-
 def main():
     display_menu()
     while True:

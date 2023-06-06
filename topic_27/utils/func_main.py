@@ -38,10 +38,7 @@ def add_info_reader():
 
 def delete_info_reader():
     """
-    Xóa thông tin của độc giả theo:
-        1: theo sdt ( xóa 1 độc giả vì sdt không thể 2 ngừoi chung)
-        2: theo email ( xóa độc giả vì email không thể 2 người chung)
-        3: theo id ( xóa độc giả vì email không thể 2 người chung)
+    Xóa thông tin của độc giả theo id/ sdt/
     :return:
         thông báo thành công hoặc không tìm thấy độc giả như yêu cầu để xóa
     """
@@ -66,27 +63,20 @@ def delete_info_reader():
         option = input("Nhập sự lựa chọn của bạn:").strip()
         match option:
             case "2.1":
-                # nhập số điện thoại
-                text = input_phone_number_reader()
+                text = input_phone_number_reader()  # nhập số điện thoại
             case "2.2":
-                # nhập email
-                text = input_email_reader()
+                text = input_email_reader()  # nhập email
             case "2.3":
-                # nhập id
-                text = input_id_reader()
+                text = input_id_reader()  # nhập id
             case _:
                 print("Bạn đã nhập sai, xin mời bạn nhập lại:")
     # tìm kiếm độc giả theo input vừa nhập và theo option chọn ban đầu
     readers_found = find_reader(readers, text, type=dict_option[option][-1])
 
-    # kiểm tra reader có tồn tại không
-    if len(readers_found) > 0:
-        # Xóa độc giả vừa tìm được
-        readers.remove(readers_found[-1])
-        # chuyển thành một danh sách text
-        reader_texts = readers_to_texts(readers)
-        # Lưu dữ liệu vào file text
-        write_texts(reader_texts)
+    if len(readers_found) > 0:  # kiểm tra reader có tồn tại không
+        readers.remove(readers_found[-1])  # Xóa độc giả vừa tìm được
+        reader_texts = readers_to_texts(readers)  # chuyển thành một danh sách text
+        write_texts(reader_texts)  # Lưu dữ liệu vào file text
         print("Xóa thành công!!!")
     else:
         print(f"Không tìm thấy độc giả có {dict_option[option][0]} là {text}")
@@ -119,16 +109,14 @@ def update_info_reader():
         "3.2": ["email"],
         "3.3": ["id"]
     }
-    # Lấy danh sách tất cả các độc giả ở trong dữ liệu (file text)
-    readers = get_list_readers()
+    readers = get_list_readers()  # Lấy danh sách tất cả các độc giả ở trong dữ liệu (file text)
     option = None
     reader_new = None
-    # Lựa chọn option đến khi nào nhập đúng là 3.1 or 3.2
+    # Lựa chọn option đến khi nào nhập đúng là 3.1 or 3.2 , 3.3
     while reader_new is None:
         option = input("Nhập lựa chọn của bạn:").strip()
         print("*************")
-        # kiểm tra option trong danh sách không
-        if option in dict_option.keys():
+        if option in dict_option.keys(): # kiểm tra option trong danh sách không
             # nhập thông tin của độc giải
             id = None
             if option == "3.3":
@@ -143,15 +131,12 @@ def update_info_reader():
                 reader_new['id'] = id
         else:
             print("Bạn đã nhập sai, xin mời bạn nhập lại:")
-
         # Tìm kiếm độc giả theo yêu cầu
         reader_old = find_reader(readers, reader_new[dict_option[option][-1]], dict_option[option][-1])
-
     # kiểm tra độc giả có tồn tại không, không thì hiện thị ra thông cáo không tìm thấy
     if len(reader_old) > 0:
-        # thay thế độc giả cũ thành độc giả mới
         reader_new['id'] = reader_old[-1]['id']  # lấy id của độc giả cũ
-        readers = replace_reader(readers, reader_old[-1], reader_new)
+        readers = replace_reader(readers, reader_old[-1], reader_new)  # thay thế độc giả cũ thành độc giả mới
         # Chuyển thành text rồi lưu vào file text
         reader_texts = readers_to_texts(readers)
         write_texts(reader_texts)
@@ -161,6 +146,10 @@ def update_info_reader():
 
 
 def find_info_reader():
+    """
+    Hàm tìm kiếm thông tin độc giả theo tên, email, id, số điện thoại
+    :return: danh sách độc giả có thông tin cần tìm kiếm
+    """
     print("""*** Hãy chọn cách xóa ***
     4.1 Tìm kiếm độc giả theo tên
     4.2 Tìm kiếm độc giả theo số điện thoại
@@ -183,27 +172,22 @@ def find_info_reader():
         option = input("Nhập lựa chọn của bạn:").strip()
         match option:
             case "4.1":
-                # nhập tên độc giả cần tìm kiếm
-                text = input_name_reader()
+                text = input_name_reader()  # nhập tên độc giả cần tìm kiếm
             case "4.2":
-                # nhập số điện thoại độc giả cần tìm kiếm
-                text = input_phone_number_reader()
+                text = input_phone_number_reader()  # nhập số điện thoại độc giả cần tìm kiếm
             case "4.3":
-                # nhập email độc giả cần tìm kiếm
-                text = input_email_reader()
+                text = input_email_reader()  # nhập email độc giả cần tìm kiếm
             case "4.4":
                 text = input_id_reader()
             case _:
                 print("Bạn đã nhập sai, xin mời bạn nhập lại:")
     # Tìm kiếm đọc giả theo mục lựa chọn
-
     readers_found = find_reader(readers, text, dict_option[option][-1])
 
-    if readers_found:  # kiểm tra xem độc giả tổn tại hay không ( nếu reader = None hoặc = [] => False, nếu khác 2 trường hợp khác thì trả về True
+    if len(readers_found) > 0:  # kiểm tra xem độc giả tổn tại hay không
         readers_text = readers_to_texts(readers_found)
         for text in readers_text:
             print(text)
-
     else:
         print(f"\nKhông tìm thấy độc giả có {dict_option[option][0]} là {text}")
 

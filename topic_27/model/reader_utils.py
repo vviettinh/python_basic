@@ -2,6 +2,10 @@ from utils.file_utils import read_file_text
 
 
 def get_list_readers():
+    """
+    Lấy danh sách độc giả từ file text và đưa vào list
+    :return: list of readers
+    """
     data = read_file_text()
     readers = []
     if len(data):
@@ -19,6 +23,11 @@ def get_list_readers():
 
 
 def readers_to_texts(readers):
+    """
+     chuyển các reader thành text
+    :param readers: danh sách độc giả
+    :return:
+    """
     texts = []
     for reader in readers:
         text = to_text(reader)
@@ -27,6 +36,13 @@ def readers_to_texts(readers):
 
 
 def delete_reader(readers, text, type):
+    """
+    xóa độc giả theo text theo loại id/ phone number / email
+    :param readers: list of reader
+    :param text:  thông tin của độc giả cần xóa
+    :param type: loại theo id / phone number / email
+    :return:
+    """
     for reader in readers:
         if reader[type] == text:
             readers.remove(reader)
