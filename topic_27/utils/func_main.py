@@ -1,4 +1,4 @@
-from model.reader_utils import get_list_readers, readers_to_texts, find_reader, replace_reader
+from model.reader_utils import get_list_readers, readers_to_texts, find_reader, replace_reader, to_text
 from utils.file_utils import write_text, write_texts
 from utils.input_utils import input_info_reader, input_name_reader, input_phone_number_reader, input_email_reader, \
     input_id_reader
@@ -91,7 +91,7 @@ def display_readers():
     # Duyệt vòng for để hiện thị thông tin của độc giả
     if readers:
         for reader in readers:
-            print(reader.to_text() + "\n")
+            print(to_text(reader) + "\n")
     else:
         print("\n ***Không có độc giả nào trong danh sách***")
 
