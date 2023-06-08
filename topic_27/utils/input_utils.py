@@ -1,4 +1,4 @@
-from utils.re_utils import is_valid_name, is_valid_phone_number, is_valid_email
+from utils.val_utils import is_valid_name, is_valid_phone_number, is_valid_email
 from utils.string_utils import name_normalize
 
 
@@ -42,8 +42,8 @@ def input_phone_number_reader():
     while not is_valid_phone_number(phone_number):
         phone_number = input("""
     Bạn đang nhập sai định dạng của số điện thoại,
-    Ví dụ đúng: '0987654321', '+84987654321', '123-456-7890'
-    Ví dụ sai: '0123456789'
+    Ví dụ đúng: '0987654321',
+    số điện thoại chỉ có chữ số, không có kí tự 
     , Xin mời bạn nhập lại số điện thoại của độc giả: 
                                 """)
     return phone_number
@@ -59,7 +59,6 @@ def input_email_reader():
         email = input("""
     Bạn đang nhập sai định dạng của email,
     Ví dụ đúng: 'abc@example.com', 'abc.def@example.com', 'abc123@example.com'
-    Ví dụ sai: 'abc@example', 'abc@.com'
     , Xin mời bạn nhập lại email của độc giả: 
                     """)
     return email
